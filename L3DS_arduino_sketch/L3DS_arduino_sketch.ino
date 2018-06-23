@@ -27,7 +27,7 @@ int servo_direction = 0;
 int Stepper_position = 0; // 0=top, 180=bottom
 String serial;
 float dist;
-
+int readingSum;
 //function definitions
 
 String toXYZ (float StepperPos, float ServoPos, float Radius, float Xinit, float Yinit,float Zinit )
@@ -95,23 +95,14 @@ void loop() {
     delay(timedelay);
     servo_position--;
   }
-
-  //Todo : add Lidar input loop (done) 
-  if(Lidar_reading_count==0) 
+  readingSum=0;
+  for( int i=0; i<10;i++)
   {
-    //add new function
-   dist=myLidar.distance();
-    serial=toXYZ(Stepper_position,servo_position,dist,0,0,0);
-    Serial.println(serial); //Take a reading without bias correction
-    Lidar_reading_count++;
+    readingSum+=myLidar.distance();
   }
-  else
-  {
-    dist=myLidar.distance(false);
-    serial=toXYZ(Stepper_position,servo_position,dist,0,0,0);
-    Serial.println(serial); //Take a reading without bias correction
-    Lidar_reading_count++;
-    if(Lidar_reading_count>=49) Lidar_reading_count=0;  
-  }//Todo : add processing sketch for writing the acquired reading to .txt file
-  //Remember presence of test LED (use function led(); ) and order of loops
+  dist=readingSum/10;
+  serial=toXYZ(Stepper_position,servo_position,dist,0,0,0);
+  Serial.println(serial); //Take a reading without bias correction
+  Lidar_reading_count++;
+  //Todo : add Lidar input loop (done) 
 }
