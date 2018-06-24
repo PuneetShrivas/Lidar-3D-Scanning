@@ -27,12 +27,14 @@ void setup()
   while(port.available() > 0) //as long as data comes from serial monitor 
   {
     serial = port.readStringUntil(end);
-  }
-  if(serial!=null) //if string is not empty, write it to file;
+    if(serial!=null) //if string is not empty, write it to file;
   {
     Output.print(serial);
+    println(serial);
     serial = null;
+  }    
   }
+
 }  
   void keyPressed()
   {

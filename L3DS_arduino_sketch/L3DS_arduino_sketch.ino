@@ -60,7 +60,7 @@ pinMode(12,OUTPUT);
 pinMode(11,OUTPUT);
 pinMode(10,OUTPUT);
 pinMode(9, OUTPUT);
-Serial.begin(9600);
+Serial.begin(2400);
 myLidar.reset();
 myLidar.begin(0,true);//Sets configuration mode to 0:default (refer LIDARlite library), I2C speed to 400 kHz
 myLidar.configure(2); //for checking alternate configurations
